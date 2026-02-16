@@ -1,0 +1,10 @@
+# Product Requirements Document
+
+## Overview
+Build a Next.js e-commerce site with Stripe checkout.
+
+## Features
+- Product listing page
+- Shopping cart
+- Stripe checkout integration
+- Order history for users

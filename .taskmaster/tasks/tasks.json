@@ -1,0 +1,249 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Next.js E-commerce Project",
+        "description": "Set up a new Next.js latest version with TypeScript and App Router for the e-commerce site",
+        "details": "Initialize Next.js latest version project using 'npx create-next-app@latest ecommerce-site --typescript --tailwind --eslint --app --src-dir --import-alias @/*'. Configure TypeScript strict mode, set up folder structure (/components, /lib, /types, /app). Install additional dependencies: @types/node, @types/react, @types/react-dom.",
+        "testStrategy": "Verify project starts successfully with 'npm run dev', check TypeScript compilation with 'npm run build', ensure all configuration files are properly set up",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Configure Database and Product Schema",
+        "description": "Set up database connection and define product schema for the e-commerce store",
+        "details": "Install and configure Prisma ORM with PostgreSQL/SQLite. Create schema.prisma with Product model (id, name, description, price, images, category, stock, createdAt, updatedAt). Set up database connection, run migrations. Create seed script for sample products.",
+        "testStrategy": "Run database migrations successfully, verify seed data inserts correctly, test database connection in development environment",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Implement Product Listing Page",
+        "description": "Build the main product catalog page with filtering and search capabilities",
+        "details": "Create /app/products/page.tsx with server component for product listing. Implement ProductCard component showing image, title, price, add-to-cart button. Add filtering by category, price range, and search functionality. Use Next.js Image component for optimized images. Implement pagination for large product catalogs.",
+        "testStrategy": "Test product loading from database, verify filtering works correctly, check responsive design on different screen sizes, validate image optimization",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create product data structure and mock data",
+            "description": "Define TypeScript interfaces for Product and create mock product data with categories for initial development",
+            "dependencies": [],
+            "details": "Create src/types/product.ts with Product interface including id, name, price, image, category, description fields. Create src/data/products.ts with sample product data (at least 20 products across 3-4 categories like Electronics, Clothing, Books). This will provide the foundation for all product-related components.",
+            "status": "pending",
+            "testStrategy": "Verify TypeScript compilation passes and mock data structure matches interface requirements"
+          },
+          {
+            "id": 2,
+            "title": "Build ProductCard component with Next.js Image optimization",
+            "description": "Create reusable ProductCard component with responsive design and add-to-cart functionality",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Create src/components/ProductCard.tsx using Next.js Image component for optimized images. Include product title, price display, category badge, and add-to-cart button with hover states. Use Tailwind CSS for responsive design (mobile-first approach). Follow existing component patterns from the codebase using TypeScript and proper prop interfaces.",
+            "status": "pending",
+            "testStrategy": "Test responsive behavior across mobile/tablet/desktop viewports, verify image optimization works correctly, and check hover states"
+          },
+          {
+            "id": 3,
+            "title": "Implement filtering and search functionality with URL state management",
+            "description": "Create filtering system for category, price range, and search with URL persistence using Next.js searchParams",
+            "dependencies": [
+              "3.1"
+            ],
+            "details": "Create src/components/ProductFilters.tsx with category dropdown, price range slider, and search input. Use Next.js useSearchParams and useRouter for URL state management. Implement filtering logic that works with the mock data structure. Include clear filters functionality and responsive design for mobile.",
+            "status": "pending",
+            "testStrategy": "Test filter combinations work correctly, verify URL state persistence on page refresh, and validate search functionality across product names and descriptions"
+          },
+          {
+            "id": 4,
+            "title": "Create products page with server component and grid layout",
+            "description": "Build main products listing page at /app/products/page.tsx with server-side rendering",
+            "dependencies": [
+              "3.2",
+              "3.3"
+            ],
+            "details": "Create app/products/page.tsx as a Next.js server component. Implement responsive grid layout for ProductCard components using CSS Grid with Tailwind classes. Handle searchParams for filtering on the server side. Include loading states and empty states when no products match filters. Follow the existing app router patterns in the codebase.",
+            "status": "pending",
+            "testStrategy": "Verify server-side rendering works correctly, test grid layout responsiveness, validate filtering integration with ProductCard components, and check loading/empty states"
+          },
+          {
+            "id": 5,
+            "title": "Add pagination system with Next.js routing",
+            "description": "Implement pagination for product listings using URL-based page navigation",
+            "dependencies": [
+              "3.4"
+            ],
+            "details": "Create src/components/Pagination.tsx component with page numbers, previous/next buttons, and page size controls. Integrate with existing filtering system using Next.js searchParams. Implement server-side pagination logic to handle large product catalogs. Add page info display (showing X-Y of Z products) and ensure accessibility with proper ARIA labels.",
+            "status": "pending",
+            "testStrategy": "Test pagination works with filters applied, verify URL state management for page numbers, validate page size changes, and check accessibility compliance for navigation elements"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Build Shopping Cart Context and Components",
+        "description": "Implement cart state management and cart UI components",
+        "details": "Create CartContext using React Context API for global cart state. Implement cart actions: addItem, removeItem, updateQuantity, clearCart. Build CartDrawer/CartModal component with item list, quantity controls, total calculation. Add cart icon with item count in header. Persist cart data in localStorage.",
+        "testStrategy": "Test add/remove items functionality, verify quantity updates, check cart persistence across page reloads, validate total price calculations",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Set up Stripe Payment Integration",
+        "description": "Configure Stripe for secure payment processing",
+        "details": "Install @stripe/stripe-js and stripe packages. Set up Stripe API keys in environment variables. Create /app/api/create-payment-intent/route.ts API endpoint. Configure Stripe webhook endpoint for payment confirmation at /app/api/webhooks/stripe/route.ts. Set up Stripe Elements for card input form.",
+        "testStrategy": "Test payment intent creation, verify webhook signature validation, test successful and failed payment scenarios in Stripe test mode",
+        "priority": "high",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Implement Checkout Flow",
+        "description": "Build complete checkout process with address and payment forms",
+        "details": "Create /app/checkout/page.tsx with multi-step checkout form. Implement address collection form with validation using react-hook-form and zod. Integrate Stripe Elements for payment method collection. Add order summary component. Handle payment processing and order confirmation flow.",
+        "testStrategy": "Test form validation, verify Stripe payment processing, check order creation in database, test error handling for failed payments",
+        "priority": "medium",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Create Order Management System",
+        "description": "Implement order storage and status tracking",
+        "details": "Extend database schema with Order model (id, userId, items, total, status, shippingAddress, createdAt). Create OrderItem model for order line items. Implement order creation logic in checkout success. Add order status enum (pending, paid, shipped, delivered, cancelled).",
+        "testStrategy": "Verify order creation after successful payment, test order data integrity, validate relationship between orders and products",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Build User Authentication",
+        "description": "Implement user registration and login system",
+        "details": "Install and configure NextAuth.js with credentials provider. Create User model in database schema with email, password, name fields. Implement registration and login pages. Add password hashing with bcryptjs. Create protected route middleware for order history access.",
+        "testStrategy": "Test user registration and login flows, verify password hashing, check session persistence, test protected route access",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and configure NextAuth.js with dependencies",
+            "description": "Set up NextAuth.js authentication library with credentials provider and necessary dependencies for password hashing",
+            "dependencies": [],
+            "details": "Install next-auth, bcryptjs, and @types/bcryptjs packages. Create /src/app/api/auth/[...nextauth]/route.ts with NextAuth configuration. Set up credentials provider for email/password authentication. Configure environment variables for NEXTAUTH_SECRET and NEXTAUTH_URL in .env.local file.",
+            "status": "pending",
+            "testStrategy": "Verify NextAuth.js endpoints are accessible at /api/auth/* and configuration loads without errors"
+          },
+          {
+            "id": 2,
+            "title": "Create database schema and User model",
+            "description": "Set up database integration with User model containing email, password, and name fields",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Choose and install database solution (Prisma with SQLite for development). Create schema.prisma with User model including id, email (unique), password (hashed), name, createdAt, updatedAt fields. Generate Prisma client and run initial migration. Create database utility functions for user operations.",
+            "status": "pending",
+            "testStrategy": "Test database connection, verify User model creation, and validate schema constraints"
+          },
+          {
+            "id": 3,
+            "title": "Implement user registration page and API",
+            "description": "Create registration form with validation and backend API to handle user creation",
+            "dependencies": [
+              "8.2"
+            ],
+            "details": "Create /src/app/register/page.tsx with form using react-hook-form and zod validation for email, password, and name fields. Implement /src/app/api/register/route.ts API endpoint that hashes passwords with bcryptjs and stores users in database. Add proper error handling for duplicate emails and validation failures.",
+            "status": "pending",
+            "testStrategy": "Test form validation, verify password hashing, check user creation in database, and test error handling for duplicate emails"
+          },
+          {
+            "id": 4,
+            "title": "Implement login page and session management",
+            "description": "Create login form and configure NextAuth.js session handling with credentials verification",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Create /src/app/login/page.tsx with login form for email and password. Update NextAuth configuration to verify credentials against database using bcryptjs.compare. Implement custom pages for sign-in and sign-up in NextAuth config. Add session provider to root layout and create auth utilities for client/server components.",
+            "status": "pending",
+            "testStrategy": "Test login flow with valid and invalid credentials, verify session creation and persistence, check redirect behavior"
+          },
+          {
+            "id": 5,
+            "title": "Create authentication middleware and protected routes",
+            "description": "Implement middleware for protecting routes and create higher-order components for authenticated access",
+            "dependencies": [
+              "8.4"
+            ],
+            "details": "Create /src/middleware.ts to protect routes starting with /orders and /profile. Implement withAuth HOC for protecting page components. Create auth utilities (useSession, getServerSession) following Next.js App Router patterns. Add navigation components showing login/logout state. Update existing layout to include authentication status and navigation.",
+            "status": "pending",
+            "testStrategy": "Test protected route access for unauthenticated users, verify middleware redirects, check session persistence across page refreshes and navigation"
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Implement Order History Page",
+        "description": "Create user order history and order details views",
+        "details": "Create /app/orders/page.tsx for authenticated users to view order history. Implement OrderCard component showing order date, total, status. Create /app/orders/[orderId]/page.tsx for detailed order view with items, shipping address, payment status. Add order tracking information display.",
+        "testStrategy": "Test order history loading for authenticated users, verify order details accuracy, check proper authentication guards, test empty state handling",
+        "priority": "medium",
+        "dependencies": [
+          7,
+          8
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Add Responsive Design and Error Handling",
+        "description": "Implement responsive design and comprehensive error handling",
+        "details": "Ensure all components are mobile-responsive using Tailwind CSS breakpoints. Add error boundaries for React error handling. Implement loading states for async operations. Add toast notifications for user feedback. Create 404 and error pages. Add form validation error displays.",
+        "testStrategy": "Test responsiveness on mobile, tablet, and desktop. Verify error handling for network failures, validate loading states appear correctly, check toast notifications work properly",
+        "priority": "medium",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-01T19:31:40.045Z",
+      "updated": "2025-09-01T19:31:40.045Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
